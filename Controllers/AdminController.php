@@ -16,6 +16,7 @@ class AdminController extends \jarrus90\Admin\Web\Controllers\AdminController {
     /** @var UserFinder */
     protected $userFinder;
 
+    public $defaultAction = 'refills';
     /**
      * @param string  $id
      * @param BaseModule $module
@@ -27,28 +28,62 @@ class AdminController extends \jarrus90\Admin\Web\Controllers\AdminController {
         parent::__construct($id, $module, $config);
     }
 
-    public function actionUser($id) {
+    public function actionRefills($id) {
         $user = $this->findModel($id);
         $purse = Purse::findOne(['user_id' => $id]);
-        $form = Yii::createObject([
+        $formRefill = Yii::createObject([
             'class' => PurseRefillForm::className(),
             'purse' => $purse
         ]);
-        return $this->render('user', [
+        $filterRefillsModel = new PurseRefill();
+        return $this->render('refills', [
                     'user' => $user,
                     'purse' => $purse,
-                    'formRefill' => $form
+                    'formRefill' => $formRefill,
+                    'filterRefillsModel' => $filterRefillsModel,
+                    'dataRefillsProvider' => $filterRefillsModel->search(Yii::$app->request->get()),
         ]);
     }
 
-    public function actionRefill($id, $amount) {
+    public function actionSpents($id) {
         $user = $this->findModel($id);
         $purse = Purse::findOne(['user_id' => $id]);
-        $this->performAjaxValidation();
-        return $this->render('user', [
-                    'user' => $user,
-                    'purse' => $purse
+        $formSpent = Yii::createObject([
+            'class' => PurseSpendingsForm::className(),
+            'purse' => $purse
         ]);
+        $filterSpentsModel = new PurseSpendings();
+        return $this->render('spents', [
+                    'user' => $user,
+                    'purse' => $purse,
+                    'formSpent' => $formSpent,
+                    'filterSpentsModel' => $filterSpentsModel,
+                    'dataSpentsProvider' => $filterSpentsModel->search(Yii::$app->request->get()),
+        ]);
+    }
+
+    public function actionRefill($id) {
+        $formRefill = Yii::createObject([
+            'class' => PurseRefillForm::className(),
+            'purse' => $this->findPurse($id)
+        ]);
+        $this->performAjaxValidation($formRefill);
+        if ($formRefill->load(Yii::$app->request->post()) && $formRefill->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('user-purse', 'Refill has been created'));
+        }
+        return $this->redirect(['refills', 'id' => $id]);
+    }
+
+    public function actionSpend($id) {
+        $formSpend = Yii::createObject([
+            'class' => PurseSpendingsForm::className(),
+            'purse' => $this->findPurse($id)
+        ]);
+        $this->performAjaxValidation($formSpend);
+        if ($formSpend->load(Yii::$app->request->post()) && $formSpend->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('user-purse', 'Spend has been created'));
+        }
+        return $this->redirect(['spents', 'id' => $id]);
     }
 
     /**
@@ -65,8 +100,24 @@ class AdminController extends \jarrus90\Admin\Web\Controllers\AdminController {
         if ($user === null) {
             throw new NotFoundHttpException('The requested page does not exist');
         }
-
         return $user;
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     *
+     * @param int $id
+     *
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findPurse($id) {
+        $purse = Purse::findOne(['user_id' => $id]);
+        if ($purse === null) {
+            throw new NotFoundHttpException('The requested purse does not exist');
+        }
+        return $purse;
     }
 
 }

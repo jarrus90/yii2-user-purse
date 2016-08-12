@@ -16,7 +16,7 @@ class m160809_103818_user_purse extends \yii\db\Migration {
         $this->createTable('{{%user_purse_refill}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
-            'refill_amount' => $this->money(32, 4),
+            'amount' => $this->money(32, 4),
             'created_at' => $this->integer(),
             'source' => $this->string(),
             'description' => $this->text(),
@@ -26,7 +26,7 @@ class m160809_103818_user_purse extends \yii\db\Migration {
         $this->createTable('{{%user_purse_spendings}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
-            'spent_amount' => $this->money(32, 4),
+            'amount' => $this->money(32, 4),
             'created_at' => $this->integer(),
             'description' => $this->text(),
                 ], $tableOptions);

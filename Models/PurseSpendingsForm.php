@@ -40,6 +40,10 @@ class PurseSpendingsForm extends Model {
         if (!$this->_purse) {
             throw new \yii\base\InvalidConfigException('Purse must be set');
         }
+        $defaultCurrency = \jarrus90\Currencies\Models\Currency::findOne(['is_default' => true]);
+        if ($defaultCurrency) {
+            $this->currency = $defaultCurrency->code;
+        }
     }
 
     public function save() {

@@ -3,7 +3,6 @@
 namespace jarrus90\UserPurse\Models;
 
 use Yii;
-use yii\db\ActiveRecord;
 use jarrus90\Currencies\Models\Currency;
 use jarrus90\User\models\Profile;
 
@@ -14,7 +13,7 @@ class Purse extends Profile {
      */
     public function rules() {
         return [
-            'purseDecimal' => ['purse_amount', 'decimal'],
+            'purseDecimal' => ['purse_amount', 'number'],
         ];
     }
 
@@ -28,12 +27,12 @@ class Purse extends Profile {
     }
 
     public function refill($amount, $currency, $source = '', $description = '') {
-        $amountConverted = $this->currencyConvert($amount, $currency);
+        $amountConverted = Currency::convert($amount, $currency);
         $refill = new PurseRefill();
         $refill->setAttributes([
             'user_id' => $this->user_id,
-            'refill_amount' => $amountConverted,
-            'created_time' => time(),
+            'amount' => $amountConverted,
+            'created_at' => time(),
             'source' => $source,
             'description' => $description,
         ]);
@@ -44,23 +43,19 @@ class Purse extends Profile {
     }
 
     public function spend($amount, $currency, $description = '') {
-        $amountConverted = $this->currencyConvert($amount, $currency);
+        $amountConverted = Currency::convert($amount, $currency);
         $spend = new PurseSpendings();
         $spend->setAttributes([
             'user_id' => $this->user_id,
-            'spent_amount' => $amountConverted,
-            'created_time' => time(),
+            'amount' => $amountConverted,
+            'created_at' => time(),
             'description' => $description,
         ]);
         if ($spend->save()) {
             $this->purse_amount -= $amountConverted;
             return $this->save();
         }
-    }
-
-    protected function currencyConvert($amount, $currency) {
-        $currencyItem = Currency::getCurrency($currency);
-        return $amount * $currencyItem->rate;
+        return false;
     }
 
 }

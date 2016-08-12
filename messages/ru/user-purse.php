@@ -15,15 +15,22 @@
  * of the guide for details.
  *
  * NOTE: this file must be saved in UTF-8 encoding.
- */ 
+ */
 return [
+    'Reset filter' => 'Сбросить фильтр',
+    'Add spent' => 'Добавить затрату',
+    'Refill has been created' => 'Поплнение сохранено',
+    'Refills' => 'Пополнения',
+    'Spend has been created' => 'Затрата сохранена',
+    'Spent' => 'Затрата',
+    'Spents' => 'Затраты',
+    'Purse' => 'Кошелек',
     'Add refill' => 'Добавить пополнение',
     'Amount' => 'Сумма',
+    'Currency' => 'Валюта',
     'Description' => 'Описание',
     'Refill' => 'Пополнение',
     'Refill source' => 'Источник поплнения',
     'Save' => 'Сохранить',
     'Select currency' => 'Выбрать валюту',
-    'Currency' => 'Валюта',
-    'Purse' => 'Кошелек'
 ];

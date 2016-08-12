@@ -50,7 +50,7 @@ class PurseRefillForm extends Model {
 
     public function save() {
         if ($this->validate()) {
-            return $this->_purse->refill($this->amount, $this->currency, $this->source, $this->description);
+            return $this->_purse->refill(str_replace(',', '.', $this->amount), $this->currency, $this->source, $this->description);
         }
         return false;
     }
