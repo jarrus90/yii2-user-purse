@@ -11,18 +11,15 @@ class m160809_103818_user_purse extends \yii\db\Migration {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user_purse}}', [
-            'user_id' => $this->integer(),
-            'purse_amount' => $this->money(32, 4),
-                ], $tableOptions);
-        $this->addPrimaryKey('pk-user_purse', '{{%user_purse}}', ['user_id']);
-        $this->addForeignKey('fk-user_purse-user', '{{%user_purse}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
+        $this->addColumn('{{%user_profile}}', 'purse_amount', $this->money(32, 4)->defaultValue(0));
 
         $this->createTable('{{%user_purse_refill}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
             'refill_amount' => $this->money(32, 4),
-            'created_at' => $this->integer()
+            'created_at' => $this->integer(),
+            'source' => $this->string(),
+            'description' => $this->text(),
                 ], $tableOptions);
         $this->addForeignKey('fk-user_purse_refill-user', '{{%user_purse_refill}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
 
@@ -30,7 +27,8 @@ class m160809_103818_user_purse extends \yii\db\Migration {
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
             'spent_amount' => $this->money(32, 4),
-            'created_at' => $this->integer()
+            'created_at' => $this->integer(),
+            'description' => $this->text(),
                 ], $tableOptions);
         $this->addForeignKey('fk-user_purse_spendings-user', '{{%user_purse_spendings}}', 'user_id', '{{%user}}', 'id', 'CASCADE', 'RESTRICT');
     }
@@ -41,7 +39,7 @@ class m160809_103818_user_purse extends \yii\db\Migration {
     public function safeDown() {
         $this->dropTable('{{%user_purse_refill}}');
         $this->dropTable('{{%user_purse_spendings}}');
-        $this->dropTable('{{%user_purse}}');
+        $this->dropColumn('{{%user_profile}}', 'purse_amount');
     }
 
 }
