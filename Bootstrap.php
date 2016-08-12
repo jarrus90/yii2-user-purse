@@ -20,7 +20,8 @@ class Bootstrap implements BootstrapInterface {
         /**
          * @var $module Module 
          */
-        if ($app->hasModule('user-purse') && ($module = $app->getModule('user-purse')) instanceof Module) {
+        $userModuleIsset = ($app->hasModule('user') && ($moduleUser = $app->getModule('user')) instanceof \jarrus90\User\Module);
+        if ($userModuleIsset && $app->hasModule('user-purse') && ($module = $app->getModule('user-purse')) instanceof Module) {
             if (!isset($app->get('i18n')->translations['user-purse*'])) {
                 $app->get('i18n')->translations['user-purse*'] = [
                     'class' => PhpMessageSource::className(),

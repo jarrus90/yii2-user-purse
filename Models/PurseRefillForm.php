@@ -10,17 +10,26 @@ class PurseRefillForm extends Model {
     protected $_purse;
     public $amount;
     public $currency;
-    public $name = 'internal';
+    public $source = 'internal';
     public $description = '';
 
     public function formName() {
         return 'purse-refill';
     }
 
+    public function attributeLabels() {
+        return [
+            'amount' => Yii::t('user-purse', 'Amount'),
+            'currency' => Yii::t('user-purse', 'Currency'),
+            'source' => Yii::t('user-purse', 'Refill source'),
+            'description' => Yii::t('user-purse', 'Description'),
+        ];
+    }
+
     public function rules() {
         return [
             'required' => [['amount', 'currency'], 'required'],
-            'safe' => [['name', 'description'], 'safe']
+            'safe' => [['source', 'description'], 'safe']
         ];
     }
 
@@ -33,11 +42,15 @@ class PurseRefillForm extends Model {
         if (!$this->_purse) {
             throw new \yii\base\InvalidConfigException('Purse must be set');
         }
+        $defaultCurrency = \jarrus90\Currencies\Models\Currency::findOne(['is_default' => true]);
+        if ($defaultCurrency) {
+            $this->currency = $defaultCurrency->code;
+        }
     }
 
     public function save() {
         if ($this->validate()) {
-            return $this->_purse->refill($this->amount, $this->currency, $this->name, $this->description);
+            return $this->_purse->refill($this->amount, $this->currency, $this->source, $this->description);
         }
         return false;
     }

@@ -16,6 +16,14 @@ class PurseSpendingsForm extends Model {
         return 'purse-spend';
     }
 
+    public function attributeLabels() {
+        return [
+            'amount' => Yii::t('user-purse', 'Amount'),
+            'currency' => Yii::t('currency', 'Currency'),
+            'description' => Yii::t('user-purse', 'Description'),
+        ];
+    }
+
     public function rules() {
         return [
             'required' => [['amount', 'currency'], 'required'],
