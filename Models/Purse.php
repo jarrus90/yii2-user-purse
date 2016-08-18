@@ -26,6 +26,10 @@ class Purse extends Profile {
         ];
     }
 
+    public function getAmount() {
+        return Yii::$app->formatter->asDecimal($this->purse_amount, 2);
+    }
+
     public function refill($amount, $currency, $source = '', $description = '') {
         $amountConverted = Currency::convert($amount, $currency);
         $refill = new PurseRefill();
