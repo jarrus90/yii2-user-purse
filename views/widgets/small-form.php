@@ -6,14 +6,14 @@ use kartik\form\ActiveForm;
 ?>
 <div class="user-purse-small-refill">
     <h4>
+        <?= Yii::t('user-purse', 'Amount'); ?>
         <?= $purse->amount; ?>
     </h4>
     <?php
     $form = ActiveForm::begin([
                 'action' => Url::toRoute(['/user-purse/front/refill']),
-                'type' => ActiveForm::TYPE_HORIZONTAL,
-                'formConfig' => ['labelSpan' => 0],
-                'id' => 'form-refill-small'
+                'id' => 'form-refill-small',
+                'method'=> 'GET'
     ]);
     ?>
     <?=
@@ -21,7 +21,7 @@ use kartik\form\ActiveForm;
         'template' => '{input}{hint}{error}'
     ]);
     ?>
-    <?= Html::submitButton(Yii::t('user-purse', 'Save'), ['class' => 'btn btn-success btn-save']); ?>
+    <?= Html::submitButton(Yii::t('user-purse', 'Refill'), ['class' => 'btn btn-success btn-save']); ?>
     <?php
     ActiveForm::end();
     ?>

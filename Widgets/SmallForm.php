@@ -4,10 +4,8 @@ namespace jarrus90\UserPurse\Widgets;
 
 use Yii;
 use yii\base\Widget;
-use yii\helpers\Url;
 use yii\base\InvalidConfigException;
-
-use jarrus90\UserPurse\Models\PurseRefillForm;
+use jarrus90\UserPurse\Models\PurseRefillFormSmall;
 
 class SmallForm extends Widget {
 
@@ -22,7 +20,7 @@ class SmallForm extends Widget {
 
     public function run() {
         $formRefill = Yii::createObject([
-                    'class' => PurseRefillForm::className(),
+                    'class' => PurseRefillFormSmall::className(),
                     'purse' => $this->purse
         ]);
         return $this->render('@jarrus90/UserPurse/views/widgets/small-form', [
