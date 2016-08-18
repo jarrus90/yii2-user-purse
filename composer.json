@@ -20,7 +20,8 @@
         "yiisoft/yii2": "~2.0",
         "kartik-v/yii2-grid": "*",
         "jarrus90/yii2-core": "*",
-        "jarrus90/yii2-user": "*"
+        "jarrus90/yii2-user": "*",
+        "jarrus90/yii2-currencies": "*"
     },
     "autoload": {
         "psr-4": {
