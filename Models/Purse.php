@@ -50,8 +50,8 @@ class Purse extends Profile {
         }
     }
 
-    public function spend($amount, $currency, $description = '') {
-        if ($this->canSpend($amount)) {
+    public function spend($amount, $currency, $description = '', $force = false) {
+        if ($force || $this->canSpend($amount)) {
             $amountConverted = Currency::convert($amount, $currency);
             $spend = new PurseSpendings();
             $spend->setAttributes([
