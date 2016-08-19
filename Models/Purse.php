@@ -30,6 +30,10 @@ class Purse extends Profile {
         return Yii::$app->formatter->asDecimal($this->purse_amount, 2);
     }
 
+    public function canSpend($amount) {
+        return floatval($this->purse_amount) >= floatval($amount);
+    }
+
     public function refill($amount, $currency, $source = '', $description = '') {
         $amountConverted = Currency::convert($amount, $currency);
         $refill = new PurseRefill();
@@ -47,17 +51,19 @@ class Purse extends Profile {
     }
 
     public function spend($amount, $currency, $description = '') {
-        $amountConverted = Currency::convert($amount, $currency);
-        $spend = new PurseSpendings();
-        $spend->setAttributes([
-            'user_id' => $this->user_id,
-            'amount' => $amountConverted,
-            'created_at' => time(),
-            'description' => $description,
-        ]);
-        if ($spend->save()) {
-            $this->purse_amount -= $amountConverted;
-            return $this->save();
+        if ($this->canSpend($amount)) {
+            $amountConverted = Currency::convert($amount, $currency);
+            $spend = new PurseSpendings();
+            $spend->setAttributes([
+                'user_id' => $this->user_id,
+                'amount' => $amountConverted,
+                'created_at' => time(),
+                'description' => $description,
+            ]);
+            if ($spend->save()) {
+                $this->purse_amount -= $amountConverted;
+                return $this->save();
+            }
         }
         return false;
     }
