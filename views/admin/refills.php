@@ -6,7 +6,7 @@ use kartik\grid\GridView;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use jarrus90\Currencies\Models\Currency;
-$this->beginContent("@jarrus90/UserPurse/views/admin/_layout.php", ['user' => $user]);
+$this->beginContent("@jarrus90/UserPurse/views/admin/_layout.php", ['user' => $user, 'purse' => $purse]);
 ?>
 <div id="refill-popup" class="fade modal" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-md">

@@ -3,6 +3,11 @@
 use yii\helpers\Url;
 $this->beginContent('@jarrus90/User/views/admin/update.php', ['user' => $user]);
 ?>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= Yii::t('user-purse', 'Current purse value:'); ?> <?= Yii::$app->formatter->asCurrency($purse->purse_amount, 'RUR'); ?></h3>
+    </div>
+</div>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="<?= (Yii::$app->controller->action->id == 'refills') ? 'active' : ''; ?>">

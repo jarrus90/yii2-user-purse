@@ -33,4 +33,5 @@ return [
     'Refill source' => 'Источник поплнения',
     'Save' => 'Сохранить',
     'Select currency' => 'Выбрать валюту',
+    'Current purse value:' => 'Сейчас в кошельке:'
 ];
