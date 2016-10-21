@@ -1,5 +1,9 @@
 <?php
 
+namespace jarrus90\UserPurse\migrations;
+
+use Yii;
+
 class m160809_103818_user_purse extends \yii\db\Migration {
 
     /**

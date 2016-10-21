@@ -38,8 +38,12 @@ class Bootstrap implements BootstrapInterface {
                             'rules' => $module->urlRules,
                 ]);
                 $app->urlManager->addRules([$rule], false);
+            } else {
+                if(empty($app->controllerMap['migrate'])) {
+                    $app->controllerMap['migrate']['class'] = 'yii\console\controllers\MigrateController';
+                }
+                $app->controllerMap['migrate']['migrationNamespaces'][] = 'jarrus90\UserPurse\migrations';
             }
-            $app->params['yii.migrations'][] = '@jarrus90/UserPurse/migrations/';
         }
     }
 
