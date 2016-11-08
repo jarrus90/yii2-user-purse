@@ -10,7 +10,7 @@ use jarrus90\UserPurse\Models\PurseSpendings;
 use jarrus90\UserPurse\Models\PurseRefillForm;
 use jarrus90\UserPurse\Models\PurseSpendingsForm;
 
-class AdminController extends \jarrus90\Admin\Web\Controllers\AdminController {
+class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
 
     use \jarrus90\Core\Traits\AjaxValidationTrait;
     /** @var UserFinder */
