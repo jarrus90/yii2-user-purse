@@ -1,6 +1,6 @@
 <?php
 
-namespace jarrus90\UserPurse\Controllers;
+namespace jarrus90\UserPurse\controllers;
 
 class FrontController extends \jarrus90\Core\Web\Controllers\FrontController {
 

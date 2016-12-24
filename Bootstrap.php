@@ -30,7 +30,6 @@ class Bootstrap implements BootstrapInterface {
                 ];
             }
             if (!$app instanceof ConsoleApplication) {
-                $module->controllerNamespace = 'jarrus90\UserPurse\Controllers';
                 $rule = Yii::createObject([
                             'class' => 'yii\web\GroupUrlRule',
                             'prefix' => $module->urlPrefix,

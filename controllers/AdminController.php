@@ -1,6 +1,6 @@
 <?php
 
-namespace jarrus90\UserPurse\Controllers;
+namespace jarrus90\UserPurse\controllers;
 
 use Yii;
 use jarrus90\User\UserFinder;
