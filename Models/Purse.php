@@ -40,7 +40,6 @@ class Purse extends Profile {
         $refill->setAttributes([
             'user_id' => $this->user_id,
             'amount' => $amountConverted,
-            'created_at' => time(),
             'source' => $source,
             'description' => $description,
             'status' => $status
@@ -59,7 +58,6 @@ class Purse extends Profile {
             $spend->setAttributes([
                 'user_id' => $this->user_id,
                 'amount' => $amountConverted,
-                'created_at' => time(),
                 'description' => $description
             ]);
             if($spend->save()) {

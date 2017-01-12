@@ -26,9 +26,17 @@ class PurseRefill extends ActiveRecord {
         return '{{%user_purse_refill}}';
     }
 
+    public function behaviors() {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+            ],
+        ];
+    }
+    
     public function rules() {
         return [
-            'required' => [['user_id', 'amount', 'created_at'], 'required'],
+            'required' => [['user_id', 'amount'], 'required'],
             'safe' => [['source', 'description', 'status'], 'safe'],
             'statusRange' => ['status', 'in', 'range' => [
                 self::STATUS_NEW,

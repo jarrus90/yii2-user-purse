@@ -14,9 +14,17 @@ class PurseSpendings extends ActiveRecord {
         return '{{%user_purse_spendings}}';
     }
 
+    public function behaviors() {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+            ],
+        ];
+    }
+
     public function rules() {
         return [
-            'required' => [['user_id', 'amount', 'created_at'], 'required'],
+            'required' => [['user_id', 'amount'], 'required'],
             'safe' => [['description'], 'safe']
         ];
     }
