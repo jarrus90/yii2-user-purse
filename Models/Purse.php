@@ -34,7 +34,7 @@ class Purse extends Profile {
         return floatval($this->purse_amount) >= floatval($amount);
     }
 
-    public function refill($amount, $currency, $source = '', $description = '') {
+    public function refill($amount, $currency, $source = '', $description = '', $status = PurseRefill::STATUS_NEW) {
         $amountConverted = Currency::convert($amount, $currency);
         $refill = new PurseRefill();
         $refill->setAttributes([
@@ -43,10 +43,12 @@ class Purse extends Profile {
             'created_at' => time(),
             'source' => $source,
             'description' => $description,
+            'status' => $status
         ]);
-        if ($refill->save()) {
-            $this->purse_amount += $amountConverted;
-            return $this->save();
+        if($refill->save()) {
+            return $refill;
+        } else {
+            return false;
         }
     }
 
@@ -58,11 +60,10 @@ class Purse extends Profile {
                 'user_id' => $this->user_id,
                 'amount' => $amountConverted,
                 'created_at' => time(),
-                'description' => $description,
+                'description' => $description
             ]);
-            if ($spend->save()) {
-                $this->purse_amount -= $amountConverted;
-                return $this->save();
+            if($spend->save()) {
+                return $spend;
             }
         }
         return false;

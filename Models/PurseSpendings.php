@@ -7,6 +7,8 @@ use yii\db\ActiveRecord;
 
 class PurseSpendings extends ActiveRecord {
 
+    const EVENT_AFTER_SPEND = 'userPurseSpendSuccess';
+    
     /** @inheritdoc */
     public static function tableName() {
         return '{{%user_purse_spendings}}';
@@ -33,9 +35,26 @@ class PurseSpendings extends ActiveRecord {
             ]
         ]);
         if ($this->load($params) && $this->validate()) {
-
+            
         }
         return $dataProvider;
+    }
+
+    public function getPurse() {
+        return $this->hasOne(Purse::className(), ['user_id' => 'user_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        $purse = $this->purse;
+        $purse->purse_amount -= $this->amount;
+        if($purse->save()) {
+            $this->trigger(self::EVENT_AFTER_SPEND, new PurseEvent([
+                'purse' => $purse
+            ]));
+        } else {
+            throw new \yii\base\Exception('Error while updating purse amount');
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 
 }

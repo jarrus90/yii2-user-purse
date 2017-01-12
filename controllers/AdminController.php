@@ -68,7 +68,7 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
             'purse' => $this->findPurse($id)
         ]);
         $this->performAjaxValidation($formRefill);
-        if ($formRefill->load(Yii::$app->request->post()) && $formRefill->save()) {
+        if ($formRefill->load(Yii::$app->request->post()) && ($formRefill->save())) {
             Yii::$app->getSession()->setFlash('success', Yii::t('user-purse', 'Refill has been created'));
         }
         return $this->redirect(['refills', 'id' => $id]);
