@@ -22,9 +22,16 @@ class PurseSpendings extends ActiveRecord {
         ];
     }
 
+    public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios['search'] = ['user_id', 'amount', 'description'];
+        return $scenarios;
+    }
+
     public function rules() {
         return [
-            'required' => [['user_id', 'amount'], 'required'],
+            'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
+            'number' => [['user_id', 'amount'], 'number'],
             'safe' => [['description'], 'safe']
         ];
     }
@@ -43,7 +50,8 @@ class PurseSpendings extends ActiveRecord {
             ]
         ]);
         if ($this->load($params) && $this->validate()) {
-            
+            $query->andFilterWhere(['user_id' => $this->user_id]);
+            $query->andFilterWhere(['like', 'description', $this->description]);
         }
         return $dataProvider;
     }

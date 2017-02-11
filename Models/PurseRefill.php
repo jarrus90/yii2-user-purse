@@ -65,6 +65,7 @@ class PurseRefill extends ActiveRecord {
         return [
             'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             'safe' => [['source', 'description', 'status'], 'safe'],
+            'number' => [['user_id', 'amount'], 'number'],
             'statusRange' => ['status', 'in', 'range' => self::$allStatuses],
             'statusActive' => ['status', function($attribute, $params){
                 if(in_array($this->getOldAttribute($attribute), self::$statusesFinal)) {
