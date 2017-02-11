@@ -17,6 +17,21 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
     protected $userFinder;
 
     public $defaultAction = 'refills';
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin_super'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * @param string  $id
      * @param BaseModule $module

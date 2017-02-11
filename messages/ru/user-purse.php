@@ -33,5 +33,15 @@ return [
     'Refill source' => 'Источник поплнения',
     'Save' => 'Сохранить',
     'Select currency' => 'Выбрать валюту',
-    'Current purse value:' => 'Сейчас в кошельке:'
+    'Current purse value:' => 'Сейчас в кошельке:',
+
+
+    'New' => 'Новый',
+    'Pending' => 'Ожидание',
+    'In progress' => 'В процессе',
+    'Cancelled' => 'Отмененный',
+    'Success' => 'Успех',
+    'Fail' => 'Неудача',
+    'Select status' => 'Выберите статус',
+    'Status' => 'Статус'
 ];
