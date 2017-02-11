@@ -36,6 +36,7 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
             'purse' => $purse
         ]);
         $filterRefillsModel = new PurseRefill();
+        $filterRefillsModel->scenario = 'search';
         return $this->render('refills', [
                     'user' => $user,
                     'purse' => $purse,
@@ -65,7 +66,8 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
     public function actionRefill($id) {
         $formRefill = Yii::createObject([
             'class' => PurseRefillForm::className(),
-            'purse' => $this->findPurse($id)
+            'purse' => $this->findPurse($id),
+            'status' => PurseRefill::STATUS_SUCCESS
         ]);
         $this->performAjaxValidation($formRefill);
         if ($formRefill->load(Yii::$app->request->post()) && ($formRefill->save())) {

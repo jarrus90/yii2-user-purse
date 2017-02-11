@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use jarrus90\Currencies\Models\Currency;
+use jarrus90\UserPurse\Models\PurseRefill;
 $this->beginContent("@jarrus90/UserPurse/views/admin/_layout.php", ['user' => $user, 'purse' => $purse]);
 ?>
 <div id="refill-popup" class="fade modal" role="dialog" tabindex="-1">
@@ -34,6 +35,15 @@ $this->beginContent("@jarrus90/UserPurse/views/admin/_layout.php", ['user' => $u
                     'data' => Currency::listMap(),
                     'options' => [
                         'placeholder' => Yii::t('user-purse', 'Select currency'),
+                    ],
+                ]);
+                ?>
+                <?=
+                $form->field($formRefill, 'status')->widget(Select2::className(), [
+                    'theme' => 'default',
+                    'data' => PurseRefill::getStatusNames(),
+                    'options' => [
+                        'placeholder' => Yii::t('user-purse', 'Select status'),
                     ],
                 ]);
                 ?>
@@ -91,12 +101,26 @@ echo GridView::widget([
             'width' => '20%'
         ],
         [
+            'attribute' => 'status',
+            'width' => '15%',
+            'filterType' => GridView::FILTER_SELECT2,
+            'filterWidgetOptions' => [
+                'theme' => 'default',
+                'data' => PurseRefill::getStatusNames(),
+                'options' => ['placeholder' => Yii::t('user-purse', 'Status')],
+                'pluginOptions' => ['allowClear' => true],
+            ],
+            'content' => function ($model) {
+                return PurseRefill::getStatusNames()[$model->status];
+            }
+        ],
+        [
             'attribute' => 'source',
             'width' => '20%'
         ],
         [
             'attribute' => 'description',
-            'width' => '45%'
+            'width' => '30%'
         ],
     ],
 ]);

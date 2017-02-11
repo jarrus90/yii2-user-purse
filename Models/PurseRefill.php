@@ -21,6 +21,27 @@ class PurseRefill extends ActiveRecord {
         self::STATUS_SUCCESS,
         self::STATUS_FAIL
     ];
+
+    public static $allStatuses = [
+        self::STATUS_NEW,
+        self::STATUS_PENDING,
+        self::STATUS_PROCESS,
+        self::STATUS_CANCELED,
+        self::STATUS_SUCCESS,
+        self::STATUS_FAIL
+    ];
+
+    public static function getStatusNames() {
+        return [
+            self::STATUS_NEW => Yii::t('user-purse', 'New'),
+            self::STATUS_PENDING => Yii::t('user-purse', 'Pending'),
+            self::STATUS_PROCESS => Yii::t('user-purse', 'In progress'),
+            self::STATUS_CANCELED => Yii::t('user-purse', 'Cancelled'),
+            self::STATUS_SUCCESS => Yii::t('user-purse', 'Success'),
+            self::STATUS_FAIL => Yii::t('user-purse', 'Fail')
+        ];
+        
+    }
     /** @inheritdoc */
     public static function tableName() {
         return '{{%user_purse_refill}}';
@@ -33,19 +54,18 @@ class PurseRefill extends ActiveRecord {
             ],
         ];
     }
-    
+
+    public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios['search'] = ['user_id', 'amount', 'source', 'description', 'status'];
+        return $scenarios;
+    }
+
     public function rules() {
         return [
-            'required' => [['user_id', 'amount'], 'required'],
+            'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             'safe' => [['source', 'description', 'status'], 'safe'],
-            'statusRange' => ['status', 'in', 'range' => [
-                self::STATUS_NEW,
-                self::STATUS_PENDING,
-                self::STATUS_PROCESS,
-                self::STATUS_CANCELED,
-                self::STATUS_SUCCESS,
-                self::STATUS_FAIL
-            ]],
+            'statusRange' => ['status', 'in', 'range' => self::$allStatuses],
             'statusActive' => ['status', function($attribute, $params){
                 if(in_array($this->getOldAttribute($attribute), self::$statusesFinal)) {
                     $this->addError($attribute, Yii::t('user-purse', 'Payment is finished and locked for update'));
@@ -68,7 +88,9 @@ class PurseRefill extends ActiveRecord {
             ]
         ]);
         if ($this->load($params) && $this->validate()) {
-            
+            $query->andFilterWhere(['status' => $this->status]);
+            $query->andFilterWhere(['like', 'source', $this->source]);
+            $query->andFilterWhere(['like', 'description', $this->description]);
         }
         return $dataProvider;
     }

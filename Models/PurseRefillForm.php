@@ -4,6 +4,7 @@ namespace jarrus90\UserPurse\Models;
 
 use Yii;
 use jarrus90\Core\Models\Model;
+use jarrus90\UserPurse\Models\PurseRefill;
 
 class PurseRefillForm extends Model {
 
@@ -12,6 +13,7 @@ class PurseRefillForm extends Model {
     public $currency;
     public $source = 'internal';
     public $description = '';
+    public $status = PurseRefill::STATUS_NEW;
 
     public function formName() {
         return 'purse-refill';
@@ -23,13 +25,15 @@ class PurseRefillForm extends Model {
             'currency' => Yii::t('user-purse', 'Currency'),
             'source' => Yii::t('user-purse', 'Refill source'),
             'description' => Yii::t('user-purse', 'Description'),
+            'status' => Yii::t('user-purse', 'Status'),
         ];
     }
 
     public function rules() {
         return [
-            'required' => [['amount', 'currency'], 'required'],
-            'safe' => [['source', 'description'], 'safe']
+            'required' => [['amount', 'currency', 'status'], 'required'],
+            'safe' => [['source', 'description'], 'safe'],
+            'statusRange' => ['status', 'in', 'range' => PurseRefill::$allStatuses],
         ];
     }
 
@@ -50,7 +54,7 @@ class PurseRefillForm extends Model {
 
     public function save() {
         if ($this->validate()) {
-            return $this->_purse->refill(str_replace(',', '.', $this->amount), $this->currency, $this->source, $this->description);
+            return $this->_purse->refill(str_replace(',', '.', $this->amount), $this->currency, $this->source, $this->description, $this->status);
         }
         return false;
     }
