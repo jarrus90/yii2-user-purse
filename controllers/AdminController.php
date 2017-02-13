@@ -9,6 +9,7 @@ use jarrus90\UserPurse\Models\PurseRefill;
 use jarrus90\UserPurse\Models\PurseSpendings;
 use jarrus90\UserPurse\Models\PurseRefillForm;
 use jarrus90\UserPurse\Models\PurseSpendingsForm;
+use yii\filters\AccessControl;
 
 class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
 
