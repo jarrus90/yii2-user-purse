@@ -51,6 +51,7 @@ class PurseSpendings extends ActiveRecord {
             ]
         ]);
         if ($this->load($params) && $this->validate()) {
+            $query->andFilterWhere(['amount' => $this->amount]);
             $query->andFilterWhere(['user_id' => $this->user_id]);
             $query->andFilterWhere(['like', 'description', $this->description]);
         }

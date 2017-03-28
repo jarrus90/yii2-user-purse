@@ -72,6 +72,7 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
             'purse' => $purse
         ]);
         $filterSpentsModel = new PurseSpendings();
+        $filterSpentsModel->scenario = 'search';
         $request = Yii::$app->request->get();
         $request[$filterSpentsModel->formName()]['user_id'] = $id;
         return $this->render('spents', [
