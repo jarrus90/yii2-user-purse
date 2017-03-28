@@ -53,12 +53,14 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
         ]);
         $filterRefillsModel = new PurseRefill();
         $filterRefillsModel->scenario = 'search';
+        $request = Yii::$app->request->get();
+        $request['user_id'] = $id;
         return $this->render('refills', [
                     'user' => $user,
                     'purse' => $purse,
                     'formRefill' => $formRefill,
                     'filterRefillsModel' => $filterRefillsModel,
-                    'dataRefillsProvider' => $filterRefillsModel->search(Yii::$app->request->get()),
+                    'dataRefillsProvider' => $filterRefillsModel->search($request),
         ]);
     }
 
@@ -70,12 +72,14 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
             'purse' => $purse
         ]);
         $filterSpentsModel = new PurseSpendings();
+        $request = Yii::$app->request->get();
+        $request['user_id'] = $id;
         return $this->render('spents', [
                     'user' => $user,
                     'purse' => $purse,
                     'formSpent' => $formSpent,
                     'filterSpentsModel' => $filterSpentsModel,
-                    'dataSpentsProvider' => $filterSpentsModel->search(Yii::$app->request->get()),
+                    'dataSpentsProvider' => $filterSpentsModel->search($request),
         ]);
     }
 
