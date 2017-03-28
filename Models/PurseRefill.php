@@ -63,7 +63,7 @@ class PurseRefill extends ActiveRecord {
 
     public function rules() {
         return [
-            'safeUserId' => [['user_id'], 'required', 'safe' => ['search']],
+            'safeUserId' => [['user_id'], 'safe', 'on' => ['search']],
             'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             'safe' => [['source', 'description', 'status'], 'safe'],
             'number' => [['user_id', 'amount'], 'number'],

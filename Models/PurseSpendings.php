@@ -30,7 +30,7 @@ class PurseSpendings extends ActiveRecord {
 
     public function rules() {
         return [
-            'safeUserId' => [['user_id'], 'required', 'safe' => ['search']],
+            'safeUserId' => [['user_id'], 'safe', 'on' => ['search']],
             'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
             'number' => [['user_id', 'amount'], 'number'],
             'safe' => [['description'], 'safe']
