@@ -90,6 +90,7 @@ class PurseRefill extends ActiveRecord {
             ]
         ]);
         if ($this->load($params) && $this->validate()) {
+            $query->andFilterWhere(['user_id' => $this->user_id]);
             $query->andFilterWhere(['status' => $this->status]);
             $query->andFilterWhere(['like', 'source', $this->source]);
             $query->andFilterWhere(['like', 'description', $this->description]);

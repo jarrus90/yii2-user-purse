@@ -54,7 +54,7 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
         $filterRefillsModel = new PurseRefill();
         $filterRefillsModel->scenario = 'search';
         $request = Yii::$app->request->get();
-        $request['user_id'] = $id;
+        $request[$filterRefillsModel->formName()]['user_id'] = $id;
         return $this->render('refills', [
                     'user' => $user,
                     'purse' => $purse,
@@ -73,7 +73,7 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
         ]);
         $filterSpentsModel = new PurseSpendings();
         $request = Yii::$app->request->get();
-        $request['user_id'] = $id;
+        $request[$filterSpentsModel->formName()]['user_id'] = $id;
         return $this->render('spents', [
                     'user' => $user,
                     'purse' => $purse,
