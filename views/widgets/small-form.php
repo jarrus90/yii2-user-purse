@@ -11,7 +11,7 @@ use kartik\form\ActiveForm;
     </h4>
     <?php
     $form = ActiveForm::begin([
-                'action' => Url::toRoute(['/user-purse/front/refill']),
+                'action' => Url::toRoute($action),
                 'id' => 'form-refill-small',
                 'method'=> 'GET'
     ]);

@@ -10,6 +10,7 @@ use jarrus90\UserPurse\Models\PurseRefillFormSmall;
 class SmallForm extends Widget {
 
     public $purse;
+    public $action = ['/user-purse/front/refill'];
 
     public function init() {
         parent::init();
@@ -25,7 +26,8 @@ class SmallForm extends Widget {
         ]);
         return $this->render('@jarrus90/UserPurse/views/widgets/small-form', [
                     'formRefill' => $formRefill,
-                    'purse' => $this->purse
+                    'purse' => $this->purse,
+                    'action' => $this->action
         ]);
     }
 
