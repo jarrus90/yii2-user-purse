@@ -29,3 +29,21 @@ YII 2.0
 php composer.phar update
 
 ~~~
+
+
+## Restrict and split frontend and backend applications
+
+```
+'modules' => [
+    'user-purse' => [
+        'as frontend' => 'jarrus90\UserPurse\filters\FrontendFilter',
+    ],
+],
+```
+```
+'modules' => [
+    'user-purse' => [
+        'as backend' => 'jarrus90\UserPurse\filters\BackendFilter',
+    ],
+],
+```
