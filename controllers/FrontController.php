@@ -2,7 +2,7 @@
 
 namespace jarrus90\UserPurse\controllers;
 
-class FrontController extends \jarrus90\Core\Web\Controllers\FrontController {
+class FrontController extends \yii\web\Controller {
 
     public function actionRefill($amount) {
         return $this->render('refill',[
