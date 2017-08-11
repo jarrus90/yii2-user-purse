@@ -32,5 +32,11 @@
     },
     "extra": {
         "bootstrap": "jarrus90\\UserPurse\\Bootstrap"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
