@@ -93,6 +93,10 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
         $this->performAjaxValidation($formRefill);
         if ($formRefill->load(Yii::$app->request->post()) && ($formRefill->save())) {
             Yii::$app->getSession()->setFlash('success', Yii::t('user-purse', 'Refill has been created'));
+        } else {
+            foreach ($formRefill->errors as $error) {
+                Yii::$app->getSession()->setFlash('danger', $error);
+            }
         }
         return $this->redirect(['refills', 'id' => $id]);
     }
@@ -105,6 +109,10 @@ class AdminController extends \jarrus90\Core\Web\Controllers\AdminController {
         $this->performAjaxValidation($formSpend);
         if ($formSpend->load(Yii::$app->request->post()) && $formSpend->save()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('user-purse', 'Spend has been created'));
+        } else {
+            foreach ($formSpend->errors as $error) {
+                Yii::$app->getSession()->setFlash('danger', $error);
+            }
         }
         return $this->redirect(['spents', 'id' => $id]);
     }
