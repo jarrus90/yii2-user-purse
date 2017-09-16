@@ -67,6 +67,9 @@ echo GridView::widget([
     'hover' => true,
     'export' => false,
     'id' => 'list-refills-table',
+    'options' => [
+        'class' => 'tab-content'
+    ],
     'toolbar' => [
         ['content' =>
             Html::a(Yii::t('user-purse', 'Add refill'), NULL, [

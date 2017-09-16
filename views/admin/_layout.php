@@ -21,11 +21,7 @@ $this->beginContent('@jarrus90/User/views/admin/update.php', ['user' => $user]);
             </a>
         </li>
     </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="refills">
-            <?= $content; ?>
-        </div>
-    </div>
+    <?= $content; ?>
 </div>
 <?php
 $this->endContent();

@@ -58,6 +58,9 @@ echo GridView::widget([
     'id' => 'list-spents-table',
     'layout' => "{toolbar}{items}{pager}",
     'pager' => ['options' => ['class' => 'pagination pagination-sm no-margin']],
+    'options' => [
+        'class' => 'tab-content'
+    ],
     'toolbar' => [
         ['content' =>
             Html::a(Yii::t('user-purse', 'Add spent'), NULL, [
