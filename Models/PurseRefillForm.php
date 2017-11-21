@@ -32,6 +32,7 @@ class PurseRefillForm extends Model {
     public function rules() {
         return [
             'required' => [['amount', 'currency', 'status'], 'required'],
+            'amountNumber' => ['amount', 'number', 'min' => 0],
             'safe' => [['source', 'description'], 'safe'],
             'statusRange' => ['status', 'in', 'range' => PurseRefill::$allStatuses],
         ];

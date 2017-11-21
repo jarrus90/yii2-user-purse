@@ -27,6 +27,7 @@ class PurseSpendingsForm extends Model {
     public function rules() {
         return [
             'required' => [['amount', 'currency'], 'required'],
+            'amountNumber' => ['amount', 'number', 'min' => 0],
             'safe' => [['description'], 'safe']
         ];
     }

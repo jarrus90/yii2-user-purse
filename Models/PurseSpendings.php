@@ -32,7 +32,8 @@ class PurseSpendings extends ActiveRecord {
         return [
             'safeUserId' => [['user_id', 'amount'], 'safe', 'on' => ['search']],
             'required' => [['user_id', 'amount'], 'required', 'on' => [self::SCENARIO_DEFAULT]],
-            'number' => [['user_id', 'amount'], 'number'],
+            'userNumber' => ['user_id', 'number'],
+            'amountNumber' => ['amount', 'number', 'min' => 0],
             'safe' => [['description'], 'safe']
         ];
     }
